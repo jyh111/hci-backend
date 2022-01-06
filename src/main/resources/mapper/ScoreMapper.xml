@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.test.ScoreMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.test.Score">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="test_id" jdbcType="INTEGER" property="testId" />
+        <result column="question_id" jdbcType="INTEGER" property="questionId" />
+        <result column="student_id" jdbcType="INTEGER" property="studentId" />
+        <result column="score" jdbcType="INTEGER" property="score" />
+        <result column="info" jdbcType="VARCHAR" property="info" />
+    </resultMap>
+    <insert id="insert" parameterType="cn.seecoder.courselearning.po.test.Score" useGeneratedKeys="true" keyProperty="id">
+        insert into score (id,test_id,question_id,student_id,score,info)
+        values (#{id,jdbcType=INTEGER}, #{testId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER},
+        #{studentId,jdbcType=INTEGER}, #{score,jdbcType=INTEGER},#{info,jdbcType=VARCHAR})
+    </insert>
+    <select id="selectByAllId" resultMap="BaseResultMap">
+        select id,test_id,question_id,student_id,score,info
+        from score
+        where (test_id = #{testId,jdbcType=INTEGER})and(question_id = #{questionId,jdbcType=INTEGER})and(student_id = #{studentId,jdbcType=INTEGER})
+    </select>
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.test.QuestionMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.test.Qustion">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+        <result column="course_id" jdbcType="INTEGER" property="courseId" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="answer" jdbcType="VARCHAR" property="answer" />
+        <result column="analysis" jdbcType="VARCHAR" property="analysis" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from course_ware
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.seecoder.courselearning.po.test.Qustion" useGeneratedKeys="true" keyProperty="id">
+        insert into question (id,teacher_id,course_id,content, answer, analysis,type)
+        values (#{id,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER},
+        #{content,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{analysis,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="java.lang.Integer">
+        update question
+        set course_id = #{courseId,jdbcType=INTEGER},
+        teacher_id = #{teacherId,jdbcType=INTEGER},
+        content = #{content,jdbcType=VARCHAR},
+        answer = #{answer,jdbcType=VARCHAR},
+        analysis = #{analysis,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select id,teacher_id,course_id,content, content, answer, analysis,type
+        from question
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,teacher_id,course_id,content, content, answer, analysis,type
+        from question
+    </select>
+    <select id="selectByCourseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select id,teacher_id,course_id,content, content, answer, analysis,type
+        from question
+        where course_id = #{courseId}
+    </select>
+    <select id="selectByTeacherId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select id,teacher_id,course_id,content, content, answer, analysis,type
+        from question
+        where teacher_id = #{teacherId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select id,teacher_id,course_id,content, content, answer, analysis,type
+        from question
+        where type = #{type,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllQuestionByTestId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select q.id,q.teacher_id,q.course_id,q.content, q.content, q.answer, q.analysis,q.type
+        from question q,question_test qt
+        where (q.id=qt.question_id) and (qt.test_id=#{testId})
+    </select>
+</mapper>
